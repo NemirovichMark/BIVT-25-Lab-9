@@ -22,17 +22,7 @@ namespace Lab9.Purple
                     char[] word = new char[right-left+1];
                     Array.Copy(symbols,left,word,0,right-left+1);
 
-                    bool has_letter = word.Any(c => char.IsLetter(c));
-                    bool last_symbol_is_punctuation = char.IsPunctuation(word[word.Length-1]);
-
-                    if (has_letter)
-                    {
-                        if (last_symbol_is_punctuation)
-                        {
-                            Array.Reverse(word,0,right-left);
-                        }
-                        else Array.Reverse(word);
-                    }
+                    ReverseWord(word);
 
                     Array.Copy(word,0,symbols,left,word.Length);
                     index = right+2;
@@ -41,6 +31,21 @@ namespace Lab9.Purple
             }
             Output = new string (symbols);
         }
-         
+        private void ReverseWord(char[] word)
+        {
+            bool hasLetter = word.Any(char.IsLetter);
+            bool hasDigit = word.Any(char.IsDigit);
+
+            if (hasLetter && !hasDigit)
+            {
+                int firstLetterIndex = Array.FindIndex(word, char.IsLetter);
+                int lastLetterIndex = Array.FindLastIndex(word, char.IsLetter);
+
+                if (firstLetterIndex >= 0 && lastLetterIndex >= firstLetterIndex)
+                {
+                    Array.Reverse(word, firstLetterIndex, lastLetterIndex - firstLetterIndex + 1);
+                }
+            }
+        }
     }
 }
