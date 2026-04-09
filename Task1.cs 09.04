@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    public class Task1 : Red
+    {
+        private int _output;
+        public int Output => _output;
+
+        public Task1(string text) : base(text)
+        {
+            _output = 0;
+            _output = default(int);
+        }
+        public override void Review()
+        {
+            //...
+            _output = 134;
+        }
+        public override string ToString()
+        {
+            return $"{_input}{Enviroment.NewLine}{_output}";
+        }
+    }
+}
