@@ -1,3 +1,19 @@
-﻿namespace Lab9.Green
+namespace Lab9.Green
 {
+    public abstract class Green
+    {
+        private string _input;
+        public string Input => _input;
+        protected Green(string input)
+        {
+            _input = input;
+
+        }
+        public abstract void Review();
+        public virtual void ChangeText(string text)
+        {
+            Review();
+
+        }
+    }
 }
