@@ -1,131 +1,84 @@
 ﻿using Lab9.Purple;
 using System;
+using System.Text;
 
 
 namespace Lab9.Purple
 {
     public class Task2 : Purple
     {
-        public string[] Output { get; private set; }
+        public string[] Output { get; private set; } = new string[0];
         public Task2(string text) : base(text)
         {
-            
         }
         public override void Review()
         {
+            int x = 0;
             string[] result = new string[0];
-            string[] elements = new string[0];
-            ElementsOfText(ref elements, _text);
-            int i = 0, j = 0;
-            string temp = "";
-            string newTemp = "";
-            while (i < elements.Length - 1)
+            string[] words = Input.Split(' ');
+
+            while (x < words.Length)
             {
-                newTemp = temp + elements[i + 1];
-                if(newTemp.Length > 50)
+                int startI = x;
+                int c = 0;
+                int currentLength = 0;
+                while (x < words.Length)
                 {
-                    Array.Resize(ref result, result.Length + 1);
-                    RemoveSpaces(ref temp);
-                    result[j++] = temp;
-                    temp = "";
+                    if (c == 0)
+                    {
+                        currentLength = words[x].Length;
+                        c = 1;
+                        x++;
+                    }
+                    else if (currentLength + 1 + words[x].Length <= 50)
+                    {
+                        currentLength += words[x].Length + 1;
+                        c++;
+                        x++;
+                    }
+                    else
+                        break;
                 }
-                temp += elements[i++];
+
+                string temp = "";
+
+                if (c == 1) 
+                    temp += words[startI];
+                else
+                {
+                    int gaps = c - 1;
+                    int countSymbols = 0;
+                    for (int i = startI; i < startI + c; i++)
+                        countSymbols += words[i].Length;
+                    int totalSpace = 50 - countSymbols;
+                    int requiredSpace = totalSpace / gaps;
+                    int extraSpace = totalSpace % gaps;
+
+                    for (int i = startI; i < startI + c; i++)
+                    {
+                        temp += words[i];
+                        int spaces = requiredSpace;
+                        if (i != startI + c - 1)
+                        {
+                            if (extraSpace > 0 && i != startI + c - 1)
+                            {
+                                spaces++;
+                                extraSpace--;
+                            }
+                            for (int j = 0; j < spaces; j++)
+                                temp += ' ';
+                        }
+                    }
+                }
+                Array.Resize(ref result, result.Length + 1);
+                result[^1] = temp;
             }
-            temp += elements[i++];
-            Array.Resize(ref result, result.Length + 1);
-            RemoveSpaces(ref temp);
-            result[j++] = temp;
-            for (int x = 0; x < result.Length; x++)
-                result[x] = ExpandSpaces(result[x], 50);
             Output = result;
         }
-        private void RemoveSpaces(ref string temp)
-        {
-            for (int x = 0; x < temp.Length; x++)
-                if (temp[x] == ' ')
-                    temp = temp[(x + 1)..];
-                else
-                    break;
-        }
-        public string ExpandSpaces(string text, int targetLength)
-        {
-            int spacesToAdd = targetLength - text.Length;
-            int spaceCount = 0;
-            foreach (char c in text)
-            {
-                if (c == ' ')
-                    spaceCount++;
-            }
-
-            if (spaceCount == 0)
-                return text.PadRight(targetLength);
-
-            int[] spaceIndexes = new int[spaceCount];
-            int idx = 0;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                if (text[i] == ' ')
-                    spaceIndexes[idx++] = i;
-            }
-
-            char[] result = new char[targetLength];
-            text.AsSpan().CopyTo(result);
-
-            int currentLength = text.Length;
-            int spaceIndex = 0;
-
-            while (spacesToAdd > 0)
-            {
-                int insertPos = spaceIndexes[spaceIndex] + 1;
-
-                result.AsSpan(insertPos, currentLength - insertPos)
-                      .CopyTo(result.AsSpan(insertPos + 1));
-
-                result[insertPos] = ' ';
-
-                currentLength++;
-
-                for (int i = spaceIndex; i < spaceIndexes.Length; i++)
-                {
-                    spaceIndexes[i]++;
-                }
-
-                spacesToAdd--;
-                spaceIndex++;
-
-                if (spaceIndex >= spaceIndexes.Length)
-                    spaceIndex = 0;
-            }
-
-            return new string(result);
-        }
-
-        private void ElementsOfText(ref string[] elements, string text)
-        {
-            //Ну в тексте же могут быть подряд спайсы(Spaceы) и таблетосы(Tabы)
-            int i = 0;
-            string temp = "";
-            bool isSpace = text[0] == ' ';
-
-            foreach(char el in text)
-            {
-                bool currentIsSpace = el == ' ';
-                if (currentIsSpace == isSpace)
-                    temp += el;
-                else
-                {
-                    Array.Resize(ref elements, elements.Length + 1);
-                    elements[i++] = temp;
-                    temp = el.ToString();
-                }
-                isSpace = currentIsSpace;
-            }
-            Array.Resize(ref elements, elements.Length + 1);
-            elements[i++] = temp;
-        }
         public override string ToString()
-        {                
+        {
+            if (Output == null) 
+                return "";
             return string.Join(Environment.NewLine, Output);
         }
     }
