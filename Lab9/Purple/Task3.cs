@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Lab9.Purple
 {
