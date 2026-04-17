@@ -26,7 +26,7 @@ namespace Lab9.Purple
             {
                 for (int i = word.Length - 1; i >= 0; i--)
                 {
-                    if ((char.IsLetter(word[i]) && !char.IsDigit(word[i]) && word[i] != '\n' && word[i] != '\r') || (word[i] == '\'') || (word[i] == '-'))
+                    if ((char.IsLetter(word[i]) && !char.IsDigit(word[i]) && !char.IsWhiteSpace(word[i])) || (word[i] == '\'') || (word[i] == '-'))
                         if (i > 2 && word[i] == 'h' && word[i - 1] == 't' && char.IsDigit(word[i - 2]))
                         {
                             res.Append("th");
@@ -40,7 +40,7 @@ namespace Lab9.Purple
 
             for (int i = 0; i < Input.Length; i++)
             {
-                if ((char.IsPunctuation(Input[i]) || char.IsDigit(Input[i]) || Input[i] == '\n' || Input[i] == '\r') && (Input[i] != '\'') && (Input[i] != '-'))
+                if ((char.IsPunctuation(Input[i]) || char.IsDigit(Input[i]) ) && (Input[i] != '\'') && (Input[i] != '-'))
                 {
                     res.Insert(i, Input[i]);
                 }
