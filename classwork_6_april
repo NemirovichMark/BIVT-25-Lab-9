@@ -1,0 +1,119 @@
+using System.Text;
+using System.Text.RegularExpressions;
+namespace ConsoleApp5;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        var students = new Student[]
+        {
+            new Student("A", "a", new int[,] { { 1, 2, 3 }, { 5, 5, 5 } }),
+            new Student("B", "b", new int[,] { { 4, 4, 5 }, { 2, 3, 3 } }),
+            new Student("C", "c", new int[,] { { 2, 3, 5 }, { 4, 4, 3 } })
+           
+        };
+        // Console.WriteLine(students[0]);
+        // foreach (var s in students)
+        // {
+        //     // Console.WriteLine(s[0, 0]);
+        // }
+
+        string str = "I am a good student";
+        string str2 = "No! I am";
+        str = "Not I am";
+        str2 = str;
+        
+        // Console.WriteLine(str2);
+        // str2 = str.Substring(4, 3);
+        // str2 = str.Replace("am", "you");
+        
+        // StringComparison.CurrentCultureIgnoreCase для игнорирования разницы между строчными и заглавными буквами!!
+        var strings = str.Split(new char[] { ' ', ',', '!', '?'}, StringSplitOptions.RemoveEmptyEntries);
+        // Console.WriteLine(str.IndexOf("o"));
+        // Console.WriteLine(str);
+        // Console.WriteLine(str2);
+        foreach (var c in "Я пишу какой-то текст. Он бесполезный, просто для теста. Он ничего не доносит")
+        {
+            bool isLetter = Char.IsLetter(c);
+            bool isDigit = Char.IsDigit(c);
+            bool isSpaceTabNewLine = Char.IsSeparator(c);
+            bool isPunctuation = Char.IsSeparator(c);
+        }
+
+        string output = $"$New \ntext\ron\r\neach{Environment.NewLine}line!";
+
+        Console.WriteLine(str2);
+    }
+
+    public class Student
+    {
+        string _name;
+        string _surname;
+
+        int[,] _marks;
+
+        public Student(string name, string surname, int[,] marks = null)
+        {
+            _name = name;
+            _surname = surname;
+            _marks = marks;
+        }
+
+        public int[,] Marks => _marks;
+
+        public double[] AverageMarks
+        {
+            get
+            {
+                if (_marks == null || _marks.GetLength(0) == 0 || _marks.GetLength(1) == 0)
+                {
+                    return null;
+                }
+
+                var average = new double[_marks.GetLength(0)];
+                for (int i = 0; i < average.GetLength(0); i++)
+                {
+                    for (int j = 0; j < average.GetLength(1); j++)
+                    {
+                        average[i] = (double)_marks[i, j] / _marks.GetLength(1);
+                    }
+                }
+
+                return average;
+            } 
+        }
+
+        public override string ToString()
+        {
+            string output = _name + " " + _surname;
+            for (int i = 0; i < _marks.GetLength(0); i++)
+            {
+                for (int j = 0; j < _marks.GetLength(1); j++)
+                {
+                    output += _marks[i, j] + " ";
+                }
+                output = output.TrimEnd();
+                output += Environment.NewLine;
+            }
+            return output;
+            StringBuilder sb = new StringBuilder(_name);
+            sb.Append("something");
+            sb.Remove(1, 5);
+            sb.ToString();
+
+            Regex regex = new Regex("/[d+]");
+            // var result = regex
+
+        }
+        public int this [int i, int j]
+        {
+            get { return _marks[i, j]; }
+        }
+
+        public double this[int idx]
+        {
+            get {return AverageMarks[idx];}
+        }
+    }
+}
