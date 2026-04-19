@@ -73,7 +73,7 @@ namespace Lab9.Green
 
             return string.Join("\n", _output.Select(x =>
             {
-                string val = x.Item2.ToString("F4", System.Globalization.CultureInfo.InvariantCulture);
+                string val = x.Item2.ToString("F4", System.Globalization.CultureInfo.InvariantCulture).Replace('.', ',');
                 return $"{x.Item1}:{val}";
             }));
         }
