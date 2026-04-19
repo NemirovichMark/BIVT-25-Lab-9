@@ -10,14 +10,14 @@ namespace Lab9.Purple
     {
         private string _output; protected (string, char)[] _codes; 
         public string Output => _output; public (string, char)[] Codes => _codes;
-        public Task3(string text) : base(text)
+        public Task3(string text) : base(text ?? string.Empty)
         {
             _output = string.Empty;
-            _codes = new (string, char)[0];
+            _codes = Array.Empty<(string, char)>();
         }
         public override void Review()
         {
-            if (Input == null) { _output = null;_codes = null; return; }
+            if (string.IsNullOrEmpty(Input)) { _output = string.Empty; _codes = Array.Empty<(string, char)>(); return; }
             string[] str = new string[Input.Length];
             int[] bgn = new int[Input.Length];
             int[] ints = new int[Input.Length];
