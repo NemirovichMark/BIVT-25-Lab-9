@@ -16,11 +16,11 @@ namespace Lab9.Purple
         }
         public override void Review()
         {
-            if (string.IsNullOrEmpty(_input))
+            if (string.IsNullOrEmpty(Input))
             {_output = string.Empty; return; }
             if (_codes == null || _codes.Length == 0)
-            {_output = _input; return; }
-            string str = _input;
+            {_output = Input; return; }
+            string str = Input;
             for (int i = 0; i < _codes.Length; i++)
                 str = str.Replace(_codes[i].Item2 + "", _codes[i].Item1);
             _output = str;
