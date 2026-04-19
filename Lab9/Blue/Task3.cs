@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Globalization;
 using System.Security.Cryptography;
 
@@ -6,7 +6,7 @@ namespace Lab9.Blue
 {
     public class Task3 : Blue
     {
-        private (char let, double per)[] _output;
+        private (char let, double per)[] _output = new (char, double)[0];
 
         public Task3(string input) : base(input) { }
 
@@ -15,7 +15,7 @@ namespace Lab9.Blue
             _output = new (char let, double per)[0];
             int count = 0;
             string[] words = Input.Split(' ');
-            
+
             foreach (string word in words)
             {
                 foreach (char ch in word)
@@ -45,9 +45,9 @@ namespace Lab9.Blue
                     }
                 }
             }
-            for (int i=0; i < _output.Length; i++)
+            for (int i = 0; i < _output.Length; i++)
             {
-                _output[i].per = Math.Round(_output[i].per/count*100.0, 4);
+                _output[i].per = Math.Round(_output[i].per / count * 100.0, 4);
             }
 
             for (int i = 0; i < _output.Length - 1; i++)
