@@ -1,177 +1,177 @@
-﻿
-//using System.Globalization;
-//using System.Text.Json;
 
-//namespace Lab9Test.Green
-//{
-//    [TestClass]
-//    public sealed class Task1
-//    {
-//        private Lab9.Green.Task1 _student;
+using System.Globalization;
+using System.Text.Json;
 
-//        private string[] _input;
-//        private string[][] _output;
+namespace Lab9Test.Green
+{
+    [TestClass]
+    public sealed class Task1
+    {
+        private Lab9.Green.Task1 _student;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-//            var file = Path.Combine(folder, "Lab9Test", "Green", "data.json");
+        private string[] _input;
+        private string[][] _output;
 
-//            var json = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(file));
+        [TestInitialize]
+        public void LoadData()
+        {
+            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            var file = Path.Combine(folder, "Lab9Test", "Green", "data.json");
 
-//            _input = json.GetProperty("Task1")
-//                         .GetProperty("input")
-//                         .Deserialize<string[]>();
+            var json = JsonSerializer.Deserialize<JsonElement>(
+                File.ReadAllText(file));
 
-//            _output = json.GetProperty("Task1")
-//                          .GetProperty("output")
-//                          .Deserialize<string[][]>();
-//        }
+            _input = json.GetProperty("Task1")
+                         .GetProperty("input")
+                         .Deserialize<string[]>();
 
-//        [TestMethod]
-//        public void Test_00_OOP()
-//        {
-//            var type = typeof(Lab9.Green.Task1);
+            _output = json.GetProperty("Task1")
+                          .GetProperty("output")
+                          .Deserialize<string[][]>();
+        }
 
-//            Assert.IsTrue(type.IsClass, "Task1 must be a class");
-//            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Green.Green)),
-//                "Task1 must inherit from Green");
+        [TestMethod]
+        public void Test_00_OOP()
+        {
+            var type = typeof(Lab9.Green.Task1);
 
-//            Assert.IsNotNull(
-//                type.GetConstructor(new[] { typeof(string) }),
-//                "Task1 must have constructor Task1(string input)"
-//            );
+            Assert.IsTrue(type.IsClass, "Task1 must be a class");
+            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Green.Green)),
+                "Task1 must inherit from Green");
 
-//            Assert.IsNotNull(type.GetMethod("Review"),
-//                "Method Review() not found");
+            Assert.IsNotNull(
+                type.GetConstructor(new[] { typeof(string) }),
+                "Task1 must have constructor Task1(string input)"
+            );
 
-//            Assert.IsNotNull(type.GetMethod("ToString"),
-//                "Method ToString() not found");
-//        }
+            Assert.IsNotNull(type.GetMethod("Review"),
+                "Method Review() not found");
 
-//        [TestMethod]
-//        public void Test_01_Input()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+            Assert.IsNotNull(type.GetMethod("ToString"),
+                "Method ToString() not found");
+        }
 
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input stored incorrectly\nTest: {i}\nText:\n{_input[i]}");
-//            }
-//        }
+        [TestMethod]
+        public void Test_01_Input()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//        [TestMethod]
-//        public void Test_02_Output()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input stored incorrectly\nTest: {i}\nText:\n{_input[i]}");
+            }
+        }
 
-//                _student.Review();
+        [TestMethod]
+        public void Test_02_Output()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//                var expected = _output[i]; // string[] вида "а:0.0640"
-//                var actual = _student.Output; // (char,double)[]
+                _student.Review();
 
-//                Assert.AreEqual(expected.Length, actual.Length, $"Length mismatch\nTest: {i}");
+                var expected = _output[i]; // string[] вида "а:0.0640"
+                var actual = _student.Output; // (char,double)[]
 
-//                for (int j = 0; j < expected.Length; j++)
-//                {
-//                    var parts = expected[j].Split(':');       // "а:0.0640" -> ["а","0.0640"]
-//                    char expectedChar = parts[0][0];
-//                    double.TryParse(parts[1], CultureInfo.InvariantCulture, out double expectedVal);
+                Assert.AreEqual(expected.Length, actual.Length, $"Length mismatch\nTest: {i}");
 
-//                    Assert.AreEqual(expectedChar, actual[j].Item1,
-//                        $"Char mismatch\nTest: {i}, Index: {j}\nExpected: {expectedChar}\nActual: {actual[j].Item1}");
+                for (int j = 0; j < expected.Length; j++)
+                {
+                    var parts = expected[j].Split(':');       // "а:0.0640" -> ["а","0.0640"]
+                    char expectedChar = parts[0][0];
+                    double.TryParse(parts[1], CultureInfo.InvariantCulture, out double expectedVal);
 
-//                    Assert.AreEqual(expectedVal, actual[j].Item2, 1e-4,
-//                        $"Value mismatch\nTest: {i}, Index: {j}\nExpected: {expectedVal}\nActual: {actual[j].Item2}");
-//                }
-//            }
-//        }
+                    Assert.AreEqual(expectedChar, actual[j].Item1,
+                        $"Char mismatch\nTest: {i}, Index: {j}\nExpected: {expectedChar}\nActual: {actual[j].Item1}");
 
-//        [TestMethod]
-//        public void Test_03_ToString()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                    Assert.AreEqual(expectedVal, actual[j].Item2, 1e-4,
+                        $"Value mismatch\nTest: {i}, Index: {j}\nExpected: {expectedVal}\nActual: {actual[j].Item2}");
+                }
+            }
+        }
 
-//                var expected = string.Join("\n", _student.Output.Select(x => $"{x.Item1}:{x.Item2:F4}"));
-//                var actual = _student.ToString();
+        [TestMethod]
+        public void Test_03_ToString()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expected, actual,
-//                    $"ToString output mismatch\nTest: {i}\nExpected:\n{expected}\nActual:\n{actual}");
-//            }
-//        }
+                var expected = string.Join("\n", _student.Output.Select(x => $"{x.Item1}:{x.Item2:F4}"));
+                var actual = _student.ToString();
 
-//        [TestMethod]
-//        public void Test_04_ChangeText()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
-//                var originalOutput = _student.Output;
+                Assert.AreEqual(expected, actual,
+                    $"ToString output mismatch\nTest: {i}\nExpected:\n{expected}\nActual:\n{actual}");
+            }
+        }
 
-//                var newText = _input[(i + 1) % _input.Length];
-//                _student.ChangeText(newText);
+        [TestMethod]
+        public void Test_04_ChangeText()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
+                var originalOutput = _student.Output;
 
-//                Assert.AreEqual(newText, _student.Input,
-//                    $"ChangeText failed to update Input\nTest: {i}");
+                var newText = _input[(i + 1) % _input.Length];
+                _student.ChangeText(newText);
 
-//                Assert.IsFalse(originalOutput.SequenceEqual(_student.Output),
-//                    $"ChangeText did not update Output\nTest: {i}");
-//            }
-//        }
+                Assert.AreEqual(newText, _student.Input,
+                    $"ChangeText failed to update Input\nTest: {i}");
 
-//        [TestMethod]
-//        public void Test_05_TypeSafety()
-//        {
-//            Init(0);
-//            _student.Review();
+                Assert.IsFalse(originalOutput.SequenceEqual(_student.Output),
+                    $"ChangeText did not update Output\nTest: {i}");
+            }
+        }
 
-//            Assert.IsInstanceOfType(_student.Output, typeof((char, double)[]),
-//                $"Output must be of type (char,double)[]\nActual type: {_student.Output.GetType()}");
-//        }
+        [TestMethod]
+        public void Test_05_TypeSafety()
+        {
+            Init(0);
+            _student.Review();
 
-//        [TestMethod]
-//        public void Test_06_ToStringLength()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+            Assert.IsInstanceOfType(_student.Output, typeof((char, double)[]),
+                $"Output must be of type (char,double)[]\nActual type: {_student.Output.GetType()}");
+        }
 
-//                var expectedLength = string.Join("\n", _student.Output.Select(x => $"{x.Item1}:{x.Item2:F4}")).Length;
-//                var actualLength = _student.ToString().Length;
+        [TestMethod]
+        public void Test_06_ToStringLength()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expectedLength, actualLength,
-//                    $"Wrong ToString length\nTest: {i}\nExpected length: {expectedLength}\nActual length: {actualLength}");
-//            }
-//        }
+                var expectedLength = string.Join("\n", _student.Output.Select(x => $"{x.Item1}:{x.Item2:F4}")).Length;
+                var actualLength = _student.ToString().Length;
 
-//        [TestMethod]
-//        public void Test_07_Inheritance()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+                Assert.AreEqual(expectedLength, actualLength,
+                    $"Wrong ToString length\nTest: {i}\nExpected length: {expectedLength}\nActual length: {actualLength}");
+            }
+        }
 
-//                Assert.IsTrue(_student is Lab9.Green.Green,
-//                    $"Task1 must inherit from Green\nTest: {i}");
+        [TestMethod]
+        public void Test_07_Inheritance()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input mismatch after inheritance\nTest: {i}\nText:\n{_input[i]}");
-//            }
-//        }
+                Assert.IsTrue(_student is Lab9.Green.Green,
+                    $"Task1 must inherit from Green\nTest: {i}");
 
-//        private void Init(int i)
-//        {
-//            _student = new Lab9.Green.Task1(_input[i]);
-//        }
-//    }
-//}
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input mismatch after inheritance\nTest: {i}\nText:\n{_input[i]}");
+            }
+        }
+
+        private void Init(int i)
+        {
+            _student = new Lab9.Green.Task1(_input[i]);
+        }
+    }
+}
