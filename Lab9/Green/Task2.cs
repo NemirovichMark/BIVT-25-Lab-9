@@ -2,15 +2,15 @@ using System;
 
 namespace Lab9.Green
 {
-    public class Subject
+    public class Task2
     {
         public string SubjectId { get; set; }
         public string SubjectName { get; set; }
         public int Credit { get; set; }
 
-        public Subject() { }
+        public Task2() { }
 
-        public Subject(string id, string name, int credit)
+        public Task2(string id, string name, int credit)
         {
             SubjectId = id;
             SubjectName = name;
