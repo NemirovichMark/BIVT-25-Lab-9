@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Green
+namespace Lab9.Green
 {
     public class Task3 : Green
     {
