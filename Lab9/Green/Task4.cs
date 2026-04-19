@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Lab9
+namespace Lab9.Green
 {
     class Program2
     {
