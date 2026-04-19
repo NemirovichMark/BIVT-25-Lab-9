@@ -1,108 +1,85 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
 
-namespace White
+namespace Lab9.White
 {
     public class Task3 : White
     {
-        private string[,] _codeTable;
-        private string _resultText;
+        private string[,] _replacementTable;
+        private string _processedText;
 
-        public Task3(string text, string[,] codeTable) : base(text)
+        public Task3(string text, string[,] codes) : base(text)
         {
-            _codeTable = codeTable;
+            _replacementTable = codes;
+            _processedText = string.Empty;
         }
 
-        protected override object GetDefaultOutput()
+        public string ResultText
         {
-            return string.Empty;
+            get
+            {
+                if (string.IsNullOrEmpty(_processedText))
+                    return Input;
+                return _processedText;
+            }
         }
 
         public override void Review()
         {
-            if (string.IsNullOrWhiteSpace(Input))
-            {
-                SetOutput(string.Empty);
-                return;
-            }
-
-            Dictionary<string, string> replacements = BuildReplacementDictionary();
-            _resultText = ReplaceWords(Input, replacements);
-            SetOutput(_resultText);
+            _processedText = TransformTextWithCodes(Input);
         }
 
-        private Dictionary<string, string> BuildReplacementDictionary()
+        private string TransformTextWithCodes(string source)
         {
-            Dictionary<string, string> dict = new Dictionary<string, string>();
-            if (_codeTable == null) return dict;
+            StringBuilder outputBuilder = new StringBuilder();
+            StringBuilder wordBuffer = new StringBuilder();
 
-            for (int i = 0; i < _codeTable.GetLength(0); i++)
+            for (int position = 0; position < source.Length; position++)
             {
-                string word = _codeTable[i, 0];
-                string code = _codeTable[i, 1];
-                if (!string.IsNullOrEmpty(word))
-                {
-                    dict[word] = code;
-                }
-            }
-            return dict;
-        }
+                char currentChar = source[position];
 
-        private string ReplaceWords(string text, Dictionary<string, string> replacements)
-        {
-            StringBuilder result = new StringBuilder();
-            StringBuilder currentWord = new StringBuilder();
-            bool inWord = false;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                char c = text[i];
-                if (char.IsLetter(c) || c == '-' || c == '\'')
+                if (char.IsLetter(currentChar) || currentChar == '\'' || currentChar == '-')
                 {
-                    currentWord.Append(c);
-                    inWord = true;
+                    wordBuffer.Append(currentChar);
                 }
                 else
                 {
-                    if (inWord)
+                    if (wordBuffer.Length > 0)
                     {
-                        string word = currentWord.ToString();
-                        if (replacements.ContainsKey(word))
-                        {
-                            result.Append(replacements[word]);
-                        }
-                        else
-                        {
-                            result.Append(word);
-                        }
-                        currentWord.Clear();
-                        inWord = false;
+                        string currentWord = wordBuffer.ToString();
+                        string replacementCode = LookupCode(currentWord);
+                        outputBuilder.Append(replacementCode);
+                        wordBuffer.Clear();
                     }
-                    result.Append(c);
+                    outputBuilder.Append(currentChar);
                 }
             }
 
-            if (inWord)
+            if (wordBuffer.Length > 0)
             {
-                string word = currentWord.ToString();
-                if (replacements.ContainsKey(word))
-                {
-                    result.Append(replacements[word]);
-                }
-                else
-                {
-                    result.Append(word);
-                }
+                string currentWord = wordBuffer.ToString();
+                string replacementCode = LookupCode(currentWord);
+                outputBuilder.Append(replacementCode);
             }
 
-            return result.ToString();
+            return outputBuilder.ToString();
+        }
+
+        private string LookupCode(string searchWord)
+        {
+            for (int row = 0; row < _replacementTable.GetLength(0); row++)
+            {
+                if (string.Equals(_replacementTable[row, 0], searchWord, StringComparison.Ordinal))
+                {
+                    return _replacementTable[row, 1];
+                }
+            }
+            return searchWord;
         }
 
         public override string ToString()
         {
-            Review();
-            return (string)Output;
+            return ResultText;
         }
     }
 }
