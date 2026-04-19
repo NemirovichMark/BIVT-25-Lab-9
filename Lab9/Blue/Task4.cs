@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 
 namespace Lab9.Blue
 {
     public class Task4 : Blue
     {
-        private int _output;
+        private int _output = 0;
 
         public Task4(string input) : base(input) { }
 
