@@ -2,7 +2,7 @@ namespace Lab9.Purple;
 
 public class Task4 : Purple
 {
-    private string _output = "";
+    private string _output;
     private (string, char)[] _codes;
     public string Output => _output;
     public (string, char)[] Codes => _codes;

@@ -10,7 +10,6 @@ public class Task3 : Purple
 
     public Task3(string text) : base(text)
     {
-        _output = "";
         _codes = [];
     }
 
