@@ -1,127 +1,159 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
+using System.Text;
 
-namespace White
+namespace Lab9.White
 {
     public class Task1 : White
     {
-        private double _averageComplexity;
+        private readonly char[] _punctuationSymbols =
+        {
+            '.', '!', '?', ',', ':', '"', ';', '–', '\'', '(', ')', '[', ']', '{', '}', '/'
+        };
+
+        private readonly char[] _sentenceEndings = { '.', '!', '?' };
 
         public Task1(string text) : base(text)
         {
         }
 
-        protected override object GetDefaultOutput()
+        public double ComplexityAverage
         {
-            return 0.0;
+            get
+            {
+                if (string.IsNullOrEmpty(Input))
+                    return 0;
+                return ComputeAverageComplexity();
+            }
+        }
+
+        private double ComputeAverageComplexity()
+        {
+            string[] sentences = DivideIntoSentences(Input);
+
+            if (sentences.Length == 0)
+                return 0;
+
+            double totalComplexity = 0;
+            int actualSentenceCount = 0;
+
+            foreach (string rawSentence in sentences)
+            {
+                string trimmedSentence = rawSentence.Trim();
+                if (string.IsNullOrWhiteSpace(trimmedSentence))
+                    continue;
+
+                int wordAmount = CalculateWords(trimmedSentence);
+                int punctuationAmount = CalculatePunctuation(trimmedSentence);
+
+                totalComplexity += wordAmount + punctuationAmount;
+                actualSentenceCount++;
+            }
+
+            return actualSentenceCount == 0 ? 0 : totalComplexity / actualSentenceCount;
+        }
+
+        private string[] DivideIntoSentences(string source)
+        {
+            int sentenceCounter = 0;
+            StringBuilder tempBuilder = new StringBuilder();
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                tempBuilder.Append(source[i]);
+                if (IsSentenceEnding(source[i]))
+                {
+                    bool isLastPosition = i == source.Length - 1;
+                    bool nextIsWhitespace = !isLastPosition && char.IsWhiteSpace(source[i + 1]);
+                    if (isLastPosition || nextIsWhitespace)
+                    {
+                        sentenceCounter++;
+                        tempBuilder.Clear();
+                    }
+                }
+            }
+            if (tempBuilder.Length > 0)
+                sentenceCounter++;
+
+            string[] resultSentences = new string[sentenceCounter];
+            tempBuilder.Clear();
+            int currentIndex = 0;
+
+            for (int i = 0; i < source.Length; i++)
+            {
+                tempBuilder.Append(source[i]);
+                if (IsSentenceEnding(source[i]))
+                {
+                    bool isLastPosition = i == source.Length - 1;
+                    bool nextIsWhitespace = !isLastPosition && char.IsWhiteSpace(source[i + 1]);
+                    if (isLastPosition || nextIsWhitespace)
+                    {
+                        resultSentences[currentIndex++] = tempBuilder.ToString();
+                        tempBuilder.Clear();
+                    }
+                }
+            }
+            if (tempBuilder.Length > 0)
+                resultSentences[currentIndex] = tempBuilder.ToString();
+
+            return resultSentences;
+        }
+
+        private bool IsSentenceEnding(char symbol)
+        {
+            foreach (char ending in _sentenceEndings)
+            {
+                if (symbol == ending)
+                    return true;
+            }
+            return false;
+        }
+
+        private int CalculateWords(string text)
+        {
+            StringBuilder cleanBuffer = new StringBuilder();
+
+            foreach (char symbol in text)
+            {
+                if (!IsPunctuationSymbol(symbol))
+                    cleanBuffer.Append(symbol);
+            }
+
+            string cleanedText = cleanBuffer.ToString().Replace('-', ' ');
+            string[] words = cleanedText.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return words.Length;
+        }
+
+        private int CalculatePunctuation(string text)
+        {
+            int counter = 0;
+
+            foreach (char symbol in text)
+            {
+                if (IsPunctuationSymbol(symbol))
+                    counter++;
+            }
+
+            return counter;
+        }
+
+        private bool IsPunctuationSymbol(char symbol)
+        {
+            foreach (char punct in _punctuationSymbols)
+            {
+                if (symbol == punct)
+                    return true;
+            }
+            return false;
         }
 
         public override void Review()
         {
-            if (string.IsNullOrWhiteSpace(Input))
-            {
-                SetOutput(0.0);
-                return;
-            }
-
-            string[] sentences = SplitIntoSentences(Input);
-            if (sentences.Length == 0)
-            {
-                SetOutput(0.0);
-                return;
-            }
-
-            int totalComplexity = 0;
-            foreach (string sentence in sentences)
-            {
-                totalComplexity += GetSentenceComplexity(sentence);
-            }
-
-            _averageComplexity = (double)totalComplexity / sentences.Length;
-            SetOutput(_averageComplexity);
-        }
-
-        private string[] SplitIntoSentences(string text)
-        {
-            List<string> sentences = new List<string>();
-            int start = 0;
-            for (int i = 0; i < text.Length; i++)
-            {
-                char c = text[i];
-                if (c == '.' || c == '!' || c == '?')
-                {
-                    string sentence = text.Substring(start, i - start + 1).Trim();
-                    if (!string.IsNullOrWhiteSpace(sentence))
-                    {
-                        sentences.Add(sentence);
-                    }
-                    start = i + 1;
-                }
-            }
-
-            if (start < text.Length)
-            {
-                string lastSentence = text.Substring(start).Trim();
-                if (!string.IsNullOrWhiteSpace(lastSentence))
-                {
-                    sentences.Add(lastSentence);
-                }
-            }
-
-            return sentences.ToArray();
-        }
-
-        private int GetSentenceComplexity(string sentence)
-        {
-            int wordCount = CountWords(sentence);
-            int punctuationCount = CountPunctuation(sentence);
-            return wordCount + punctuationCount;
-        }
-
-        private int CountWords(string text)
-        {
-            int count = 0;
-            bool inWord = false;
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                char c = text[i];
-                if (char.IsLetter(c) || c == '-' || c == '\'')
-                {
-                    if (!inWord)
-                    {
-                        inWord = true;
-                        count++;
-                    }
-                }
-                else
-                {
-                    inWord = false;
-                }
-            }
-
-            return count;
-        }
-
-        private int CountPunctuation(string text)
-        {
-            int count = 0;
-            foreach (char c in text)
-            {
-                if (char.IsPunctuation(c) && c != '-' && c != '\'')
-                {
-                    count++;
-                }
-            }
-            return count;
         }
 
         public override string ToString()
         {
-            Review();
-            return _averageComplexity.ToString(CultureInfo.InvariantCulture);
+            return ComplexityAverage.ToString();
         }
     }
 }
