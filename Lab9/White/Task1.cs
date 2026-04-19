@@ -1,0 +1,141 @@
+﻿using System;
+using System.Text;
+
+namespace Lab9.White
+{
+    public class Task1 : White
+    {
+        private readonly char[] znaki =
+        {
+            '.', '!', '?', ',', ':', '"', ';', '–', '\'', '(', ')', '[', ']', '{', '}', '/'
+        };
+        private readonly char[] st = { '.', '!', '?' };
+
+        public double Output
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Input))
+                    return 0;
+                return CalculateAverageComplexity();
+            }
+        }
+
+        public Task1(string text) : base(text)
+        {
+        }
+        private double CalculateAverageComplexity()
+        {
+            //разбиваем текст на предложения по символам конца предложения
+            string[] ww = SplitBySentenceEnders(Input);
+
+            if (ww.Length == 0)
+                return 0;
+
+            double q = 0; //суммарная сложность всех предложений
+            int s = 0;    //количество непустых предложений
+
+            foreach (var x in ww)
+            {
+                var trim = x.Trim();
+                if (string.IsNullOrWhiteSpace(trim))
+                    continue;
+
+                int wws = CountWords(trim); //количество слов в предложении
+                int punctuationCount = CountPunctuation(trim); //количество знаков препинания
+
+                q += wws + punctuationCount;
+                s++;
+            }
+            //если не было ни одного непустого предложения
+            if (s == 0)
+                return 0;
+            else
+                return q / s;
+        }
+        private string[] SplitBySentenceEnders(string text)
+        {
+            //определяем количество будущих предложений
+            int h = 0;
+            var a = new StringBuilder();
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                a.Append(text[i]);
+                if (Array.IndexOf(st, text[i]) >= 0)
+                {
+                    bool isL = i == text.Length - 1; //конец текста
+                    bool nprobel = !isL && char.IsWhiteSpace(text[i + 1]); //за символом конца (пробел)
+                    if (isL || nprobel)
+                    {
+                        h++;
+                        a.Clear();
+                    }
+                }
+            }
+            if (a.Length > 0) h++; //остаток текста без конечного знака
+
+            //заполняем массив предложений
+            string[] ww = new string[h];
+            a.Clear();
+            int idx = 0;
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                a.Append(text[i]);
+                if (Array.IndexOf(st, text[i]) >= 0)
+                {
+                    bool isL = i == text.Length - 1;
+                    bool nprobel = !isL && char.IsWhiteSpace(text[i + 1]);
+                    if (isL || nprobel)
+                    {
+                        ww[idx++] = a.ToString();
+                        a.Clear();
+                    }
+                }
+            }
+            if (a.Length > 0)
+                ww[idx] = a.ToString();
+
+            return ww;
+        }
+        private int CountWords(string text)
+        {
+            var cleaned = new StringBuilder();
+
+            //заменяем все знаки препинания на пробелы, чтобы не мешали выделению слов
+            foreach (var ch in text)
+            {
+                if (Array.IndexOf(znaki, ch) < 0)
+                    cleaned.Append(ch);
+            }
+
+            //дефис заменяем на пробел, чтобы составные слова считались отдельно
+            var words = cleaned.ToString().Replace("-", " ").Split(
+                new[] { ' ', '\t', '\n', '\r' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+
+            return words.Length;
+        }
+
+        //подсчитывает количество знаков препинания в строке
+        private int CountPunctuation(string text)
+        {
+            int h = 0;
+            foreach (var ch in text)
+                if (Array.IndexOf(znaki, ch) >= 0)
+                    h++;
+            return h;
+        }
+
+        public override void Review()
+        {
+        }
+
+        public override string ToString()
+        {
+            return Output.ToString();
+        }
+    }
+}
