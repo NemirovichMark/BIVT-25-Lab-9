@@ -4,14 +4,17 @@ namespace Lab9.Purple
     {
         protected string _input;
         public string Input => _input;
+
         protected Purple(string input)
         {
-            _input = input?? string.Empty;
+            _input = input;
         }
+        
         public abstract void Review();
+
         public virtual void ChangeText(string text)
         {
-            _input = text?? string.Empty;
+            _input = text;
             Review();
         }
     }
