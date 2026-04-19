@@ -14,5 +14,6 @@ namespace Lab9.Purple
             _input = text;
             Review();
         }
+         public abstract string ToString();
     }
 }
