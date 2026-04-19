@@ -1,19 +1,22 @@
-﻿namespace Lab9.Green
+using System;
+
+namespace Green
 {
-   public abstract class Green
+    public abstract class Green
     {
-        private string _input;
-        public string Input => _input;
-        protected Green(string text)
+        protected string Input { get; private set; }
+
+        protected Green(string input)
         {
-            _input = text;
+            Input = input;
         }
+
         public abstract void Review();
+
         public virtual void ChangeText(string text)
         {
-            _input = text;
-            Review(); 
+            Input = text;
+            Review();
         }
-        public abstract override string ToString();
     }
 }
