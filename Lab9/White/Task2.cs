@@ -7,8 +7,8 @@ namespace Lab9.White
     {
         private int[,] _syllableStats;
 
-        public Task2(string text) : base(text) 
-        { 
+        public Task2(string text) : base(text)
+        {
             _syllableStats = new int[0, 0];
         }
 
@@ -22,19 +22,19 @@ namespace Lab9.White
         private int[,] BuildSyllableMatrix(string source)
         {
             string[] extractedWords = ExtractValidWords(source);
-            
+
             if (extractedWords.Length == 0)
                 return new int[0, 2];
 
             char[] vowelLetters = GetVowelArray();
-            
+
             int[] syllableCounts = new int[extractedWords.Length];
             int maximumSyllables = 0;
 
             for (int i = 0; i < extractedWords.Length; i++)
             {
                 int vowelQuantity = 0;
-                
+
                 foreach (char letter in extractedWords[i])
                 {
                     if (ContainsChar(vowelLetters, letter))
@@ -71,7 +71,7 @@ namespace Lab9.White
 
             int[,] finalResult = new int[nonEmptyRows, 2];
             int targetIndex = 0;
-            
+
             for (int i = 0; i < tempStorage.GetLength(0); i++)
             {
                 if (tempStorage[i, 1] > 0)
@@ -95,7 +95,7 @@ namespace Lab9.White
             for (int position = 0; position < source.Length; position++)
             {
                 char currentChar = source[position];
-                
+
                 if (char.IsLetter(currentChar) || currentChar == '-' || currentChar == '\'')
                 {
                     if (wordBuffer.Length == 0)
@@ -114,7 +114,7 @@ namespace Lab9.White
                     previousWasDigit = char.IsDigit(currentChar);
                 }
             }
-            
+
             if (wordBuffer.Length > 0 && !wordAfterDigit)
                 validWordCounter++;
 
@@ -127,7 +127,7 @@ namespace Lab9.White
             for (int position = 0; position < source.Length; position++)
             {
                 char currentChar = source[position];
-                
+
                 if (char.IsLetter(currentChar) || currentChar == '-' || currentChar == '\'')
                 {
                     if (wordBuffer.Length == 0)
@@ -146,7 +146,7 @@ namespace Lab9.White
                     previousWasDigit = char.IsDigit(currentChar);
                 }
             }
-            
+
             if (wordBuffer.Length > 0 && !wordAfterDigit)
                 wordArray[currentWordIndex] = wordBuffer.ToString();
 
@@ -155,8 +155,8 @@ namespace Lab9.White
 
         private char[] GetVowelArray()
         {
-            return new char[] 
-            { 
+            return new char[]
+            {
                 'а', 'е', 'ё', 'и', 'о', 'у', 'ы', 'э', 'ю', 'я',
                 'А', 'Е', 'Ё', 'И', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я',
                 'a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'
@@ -176,8 +176,8 @@ namespace Lab9.White
         public override string ToString()
         {
             int[,] matrix = Output;
-            
-            if (matrix.GetLength(0) == 0) 
+
+            if (matrix.GetLength(0) == 0)
                 return string.Empty;
 
             StringBuilder outputBuilder = new StringBuilder();
@@ -187,7 +187,7 @@ namespace Lab9.White
                 outputBuilder.Append(matrix[row, 0]);
                 outputBuilder.Append(':');
                 outputBuilder.Append(matrix[row, 1]);
-                
+
                 if (row < matrix.GetLength(0) - 1)
                     outputBuilder.AppendLine();
             }
