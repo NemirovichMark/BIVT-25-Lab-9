@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab9.Purple
 {
@@ -10,14 +6,14 @@ namespace Lab9.Purple
     {
         private string _output;
         public string Output=>_output;
-        public Task1(string text) : base(text??string.Empty)
+        public Task1(string text) : base(text)
         { 
             _output = string.Empty;
         }
         public override void Review()
         {
-            if (string.IsNullOrEmpty(_input))
-            { _output = string.Empty; return; }
+            if (_input == null)
+            { _output = null; return; }
             StringBuilder s = new StringBuilder();
             StringBuilder word = new StringBuilder();
             for (int i = 0; i < Input.Length; i++)
@@ -55,7 +51,7 @@ namespace Lab9.Purple
         }
         public override string ToString()
         {
-            return Output ?? string.Empty; // если Output=null, вернем "".
+            return Output ?? string.Empty;
         }
     }
 }
