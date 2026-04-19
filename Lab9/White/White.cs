@@ -1,41 +1,46 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
 
-namespace Lab9.White
+namespace Lab9
 {
     public abstract class White
     {
-        private string _input;
-        private object? _output;
+        private string _sourceText;
+        private object? _computedResult;
 
-        public string Input => _input;
-        public object? Output => _output;
+        public string Input 
+        { 
+            get { return _sourceText; }
+            private set { _sourceText = value; }
+        }
+
+        public object? Output 
+        { 
+            get { return _computedResult; }
+            protected set { _computedResult = value; }
+        }
 
         protected White(string text)
         {
-            _input = text;
-            _output = GetDefaultOutput();
+            _sourceText = text;
+            _computedResult = GetDefaultResult();
         }
 
-        protected virtual object? GetDefaultOutput()
+        protected virtual object? GetDefaultResult()
         {
             return null;
         }
 
         public abstract void Review();
 
-        public virtual void ChangeText(string text)
+        public virtual void ChangeText(string newText)
         {
-            _input = text;
+            _sourceText = newText;
             Review();
         }
 
-        protected void SetOutput(object value)
+        protected void SetResult(object value)
         {
-            _output = value;
+            _computedResult = value;
         }
 
         public override abstract string ToString();
