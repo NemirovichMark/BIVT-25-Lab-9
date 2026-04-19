@@ -1,34 +1,59 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace Lab9.Purple;
 
-namespace Lab9.Purple
+public class Task4 : Purple
 {
-    public class Task4 : Purple
-    {
-        private string _output; protected (string, char)[] _codes;
-        public string Output => _output; public (string, char)[] Codes => _codes;
-        public Task4(string text, (string, char)[] codes) : base(text??string.Empty)
-        {
-            _output = string.Empty; _codes = codes ?? Array.Empty<(string, char)>(); ;
-        }
-        public override void Review()
-        {
-            if (string.IsNullOrEmpty(_input))
-            {_output = string.Empty; return; }
-            if (_codes == null || _codes.Length == 0)
-            {_output = _input; return; }
-            string str = _input;
-            for (int i = 0; i < _codes.Length; i++)
-                str = str.Replace(_codes[i].Item2 + "", _codes[i].Item1);
-            _output = str;
+    private string _output;
+    private (string, char)[] _codes;
 
-        }
-        public override string ToString()
+    public string Output => _output;
+
+    public Task4(string text, (string, char)[] codes) : base(text)
+    {
+        _output = string.Empty;
+        _codes = codes;
+    }
+
+    public override void Review()
+    {
+        if (Input == null)
         {
-            return _output;
+            _output = null;
+            return;
         }
+
+        if (_codes == null)
+        {
+            _output = Input;
+            return;
+        }
+
+        string result = "";
+
+        for (int i = 0; i < Input.Length; i++)
+        {
+            bool found = false;
+
+            for (int j = 0; j < _codes.Length; j++)
+            {
+                if (Input[i] == _codes[j].Item2)
+                {
+                    result += _codes[j].Item1;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                result += Input[i];
+            }
+        }
+
+        _output = result;
+    }
+
+    public override string ToString()
+    {
+        return Output ?? "";
     }
 }
