@@ -94,7 +94,7 @@ namespace Lab9.Green
             {
                 ans += _arr[i];
                 if (i != _arr.Length - 1)
-                    ans += Environment.NewLine;
+                    ans += "\r\n";
             }
             return ans;
         }
