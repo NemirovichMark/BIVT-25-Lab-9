@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab9.White
 {
-    public class Task4 : White//Найти сумму всех цифр (не чисел!)
+    public class Task4 : White //Найти сумму всех цифр (не чисел!)
     {
         private int _output;
 
