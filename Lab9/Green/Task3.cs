@@ -1,25 +1,45 @@
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
-namespace Lab9.Green
+namespace Green
 {
-    public class Task3
+    public class Task3 : Green
     {
-        public string StudentId { get; set; } = "";
-        public string SubjectId { get; set; } = "";
-        public double Score { get; set; }
+        private string pattern;
 
-        public Task3() { }
+        public string[] Output { get; private set; }
 
-        public Task3(string studentId, string subjectId, double score)
+        public Task3(string input, string pattern) : base(input)
         {
-            StudentId = studentId;
-            SubjectId = subjectId;
-            Score = score;
+            this.pattern = pattern.ToLower();
+            Output = Array.Empty<string>();
         }
 
-        public void DisplayMark()
+        public override void Review()
         {
-            Console.WriteLine($"Student ID: {StudentId} | Subject ID: {SubjectId} | Score: {Score}");
+            var words = Input
+                .Split(new char[] { ' ', ',', '.', '!', '?', ';', ':' }, StringSplitOptions.RemoveEmptyEntries);
+
+            var seen = new HashSet<string>();
+            var result = new List<string>();
+
+            foreach (var w in words)
+            {
+                var lower = w.ToLower();
+                if (lower.Contains(pattern) && !seen.Contains(lower))
+                {
+                    seen.Add(lower);
+                    result.Add(w);
+                }
+            }
+
+            Output = result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return string.Join("\n", Output);
         }
     }
 }
