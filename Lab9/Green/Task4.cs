@@ -2,9 +2,9 @@ using System;
 
 namespace Lab9.Green
 {
-    class Task4
+    public class Task4
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Task2 sub1 = new Task2("S01", "Code C#", 3);
 
