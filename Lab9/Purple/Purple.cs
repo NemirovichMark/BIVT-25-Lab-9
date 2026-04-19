@@ -14,6 +14,5 @@ namespace Lab9.Purple
             _input = text?? string.Empty;
             Review();
         }
-         public abstract string ToString();
     }
 }
