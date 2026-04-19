@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -9,12 +9,12 @@ using System.Xml;
 
 namespace Lab9.Blue
 {
-    public class Task1: Blue
+    public class Task1 : Blue
     {
-        private string[] _output;
-        public string[] Output => _output.ToArray();
+        private string[] _output = Array.Empty<string>();
+        public string[] Output => (string[])_output.Clone();
 
-        public Task1(string input): base(input)
+        public Task1(string input) : base(input)
         {
             _output = new string[0];
         }
@@ -28,7 +28,7 @@ namespace Lab9.Blue
             {
                 if (str.Length + word.Length + Math.Sign(str.Length) > 50)
                 {
-                    Array.Resize(ref _output, _output.Length+1);
+                    Array.Resize(ref _output, _output.Length + 1);
                     _output[k] = str;
                     k++;
                     str = word;
