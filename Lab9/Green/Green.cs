@@ -1,6 +1,6 @@
 using System;
 
-namespace Green
+namespace Lab9.Green
 {
     public abstract class Green
     {
