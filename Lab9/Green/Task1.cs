@@ -39,7 +39,8 @@ namespace Lab9.Green
             string res = "";
             for (int i = 0; i < _output.Length; i++)
             {
-                res += $"{_output[i].Char}:{_output[i].Count:F4}\n";
+
+                res += $"{_output[i].Letter}:{_output[i].Count:F4}\n";
 
             }
             return res.TrimEnd();
