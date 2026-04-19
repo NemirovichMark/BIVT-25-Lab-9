@@ -1,0 +1,133 @@
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Xml;
+
+namespace ConsoleApp13
+{
+    public class Programm
+    {
+        static void Main(string[] args)
+        {
+            var pupils = new Learner[]
+            {
+                new Learner("A", "a", new int[,] { { 1,2,3},{ 3,5,6} }),
+                new Learner("B", "b", new int[,] { { 1, 2, 3 }, { 6, 7, 8 } }),
+                new Learner("C", "c", new int[,] {{ 3, 5, 6 }, { 6, 7, 8 } })
+            };
+            
+            pupils[0][0, 0] = 5;
+            
+            foreach (var person in pupils) 
+            { 
+                Console.WriteLine(person[0, 1]); 
+            }
+            
+            string phrase = "I am student!";
+            string anotherPhrase = "Not!";
+            phrase = "No!";
+            anotherPhrase = phrase;
+            
+            var words = phrase.Split(new char[] { '.', '?', '!' }, 
+                StringSplitOptions.RemoveEmptyEntries);
+            
+            foreach (var symbol in "Gfghjukl")
+            { 
+                bool isLetter = Char.IsLetter(symbol);
+                bool isDigit = Char.IsDigit(symbol);
+                bool isSpaceOrTab = Char.IsSeparator(symbol);
+                bool isPunctuationMark = Char.IsPunctuation(symbol);
+            }
+            
+            string formattedText = $"New\ntext\ron\r\neach{Environment.NewLine}line!";
+            Console.WriteLine(phrase);
+            Console.WriteLine(anotherPhrase);
+            
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.Append("fghjk");
+            stringBuilder.Remove(1, 5);
+            stringBuilder.ToString();
+        }
+    }
+    
+    public class Learner
+    {
+        string firstName; 
+        string lastName;
+        int[,] grades; 
+        double[] averageGrades;
+        
+        public int[,] Grades => (int[,])grades.Clone();
+        
+        public double[] AverageGrades
+        {
+            get
+            {
+                if (grades == null || grades.GetLength(0) == 0 || grades.GetLength(1) == 0) 
+                    return null;
+                    
+                var averages = new double[grades.GetLength(0)];
+                for (int row = 0; row < averages.Length; row++)
+                {
+                    for (int col = 0; col < grades.GetLength(1); col++)
+                    {
+                        averages[row] += (double)grades[row, col] / grades.GetLength(1);
+                    }
+                }
+                return averages;
+            }
+        }
+        
+        public char this[int index]
+        { 
+            get { return firstName[index]; } 
+        }
+        
+        public double this[int row, int col]
+        {
+            get { return grades[row, col]; }
+            set
+            {
+                if (value >= 2 && value <= 5) 
+                    grades[row, col] = (int)value;
+            }
+        }
+        
+        public Learner(string name, string surname, int[,] marks = null)
+        {
+            firstName = name; 
+            lastName = surname;
+            if (marks != null)
+            { 
+                grades = (int[,])marks.Clone(); 
+            }
+        }
+        
+        public override string ToString()
+        {
+            var result = firstName + " " + lastName;
+            for (int i = 0; i < grades.GetLength(0); i++)
+            {
+                for (int j = 0; j < grades.GetLength(1); j++)
+                {
+                    result += grades[i, j] + " ";
+                }
+                result = result.TrimEnd();
+                result += Environment.NewLine;
+            }
+            return result;
+            
+            StringBuilder sb = new StringBuilder(firstName);
+            sb.Append("...");
+            sb.AppendLine(lastName);
+            for (int i = 0; i < grades.GetLength(0); i++)
+            {
+                for (int j = 0; j < grades.GetLength(1); j++)
+                {
+                    sb.Append(grades[i, j]).Append(" ");
+                }
+                result = result.TrimEnd();
+                result += Environment.NewLine;
+            }
+        }
+    }
+}
