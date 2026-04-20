@@ -1,149 +1,149 @@
-﻿
-//using System;
-//using System.IO;
-//using System.Text.Json;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using System.Linq;
 
-//namespace Lab9Test.Blue
-//{
-//    [TestClass]
-//    public sealed class Task4
-//    {
-//        private Lab9.Blue.Task4 _student;
+using System;
+using System.IO;
+using System.Text.Json;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
-//        private string[] _input;
-//        private int[] _output;
+namespace Lab9Test.Blue
+{
+    [TestClass]
+    public sealed class Task4
+    {
+        private Lab9.Blue.Task4 _student;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-//            var file = Path.Combine(folder, "Lab9Test", "Blue", "data.json");
+        private string[] _input;
+        private int[] _output;
 
-//            var json = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(file));
+        [TestInitialize]
+        public void LoadData()
+        {
+            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            var file = Path.Combine(folder, "Lab9Test", "Blue", "data.json");
 
-//            _input = json.GetProperty("Blue4")
-//                         .GetProperty("input")
-//                         .Deserialize<string[]>();
+            var json = JsonSerializer.Deserialize<JsonElement>(
+                File.ReadAllText(file));
 
-//            _output = json.GetProperty("Blue4")
-//                          .GetProperty("output")
-//                          .Deserialize<int[]>();
-//        }
+            _input = json.GetProperty("Blue4")
+                         .GetProperty("input")
+                         .Deserialize<string[]>();
 
-//        [TestMethod]
-//        public void Test_00_OOP()
-//        {
-//            var type = typeof(Lab9.Blue.Task4);
+            _output = json.GetProperty("Blue4")
+                          .GetProperty("output")
+                          .Deserialize<int[]>();
+        }
 
-//            Assert.IsTrue(type.IsClass, "Task4 must be a class");
-//            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Blue.Blue)),
-//                "Task4 must inherit from Blue");
+        [TestMethod]
+        public void Test_00_OOP()
+        {
+            var type = typeof(Lab9.Blue.Task4);
 
-//            Assert.IsNotNull(
-//                type.GetConstructor(new[] { typeof(string) }),
-//                "Task4 must have constructor Task4(string input)"
-//            );
+            Assert.IsTrue(type.IsClass, "Task4 must be a class");
+            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Blue.Blue)),
+                "Task4 must inherit from Blue");
 
-//            Assert.IsNotNull(type.GetMethod("Review"),
-//                "Method Review() not found");
+            Assert.IsNotNull(
+                type.GetConstructor(new[] { typeof(string) }),
+                "Task4 must have constructor Task4(string input)"
+            );
 
-//            Assert.IsNotNull(type.GetMethod("ToString"),
-//                "Method ToString() not found");
-//        }
+            Assert.IsNotNull(type.GetMethod("Review"),
+                "Method Review() not found");
 
-//        [TestMethod]
-//        public void Test_01_Input()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+            Assert.IsNotNull(type.GetMethod("ToString"),
+                "Method ToString() not found");
+        }
 
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input stored incorrectly\nTest: {i}");
-//            }
-//        }
+        [TestMethod]
+        public void Test_01_Input()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//        [TestMethod]
-//        public void Test_02_Output()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input stored incorrectly\nTest: {i}");
+            }
+        }
 
-//                Assert.AreEqual(_output[i], _student.Output,
-//                    $"Output mismatch\nTest: {i}");
-//            }
-//        }
+        [TestMethod]
+        public void Test_02_Output()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//        [TestMethod]
-//        public void Test_03_ToString()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                Assert.AreEqual(_output[i], _student.Output,
+                    $"Output mismatch\nTest: {i}");
+            }
+        }
 
-//                string expected = _output[i].ToString();
-//                string actual = _student.ToString();
+        [TestMethod]
+        public void Test_03_ToString()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expected, actual,
-//                    $"ToString output mismatch\nTest: {i}");
-//            }
-//        }
+                string expected = _output[i].ToString();
+                string actual = _student.ToString();
 
-//        [TestMethod]
-//        public void Test_04_ChangeText()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                Assert.AreEqual(expected, actual,
+                    $"ToString output mismatch\nTest: {i}");
+            }
+        }
 
-//                var originalOutput = 666;
+        [TestMethod]
+        public void Test_04_ChangeText()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                var newText = "Проверим 600 + 60 + 6";
-//                _student.ChangeText(newText);
+                var originalOutput = 666;
 
-//                Assert.AreEqual(newText, _student.Input,
-//                    $"ChangeText failed\nTest: {i}");
+                var newText = "Проверим 600 + 60 + 6";
+                _student.ChangeText(newText);
 
-//                Assert.AreEqual(originalOutput, _student.Output,
-//                    $"Output not updated after ChangeText\nTest: {i}");
-//            }
-//        }
+                Assert.AreEqual(newText, _student.Input,
+                    $"ChangeText failed\nTest: {i}");
 
-//        [TestMethod]
-//        public void Test_05_TypeSafety()
-//        {
-//            Init(0);
-//            _student.Review();
+                Assert.AreEqual(originalOutput, _student.Output,
+                    $"Output not updated after ChangeText\nTest: {i}");
+            }
+        }
 
-//            Assert.IsInstanceOfType(_student.Output, typeof(int),
-//                $"Output must be int\nActual: {_student.Output.GetType()}");
-//        }
+        [TestMethod]
+        public void Test_05_TypeSafety()
+        {
+            Init(0);
+            _student.Review();
 
-//        [TestMethod]
-//        public void Test_06_Inheritance()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+            Assert.IsInstanceOfType(_student.Output, typeof(int),
+                $"Output must be int\nActual: {_student.Output.GetType()}");
+        }
 
-//                Assert.IsTrue(_student is Lab9.Blue.Blue,
-//                    $"Task4 must inherit from Blue\nTest: {i}");
+        [TestMethod]
+        public void Test_06_Inheritance()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input mismatch\nTest: {i}");
-//            }
-//        }
+                Assert.IsTrue(_student is Lab9.Blue.Blue,
+                    $"Task4 must inherit from Blue\nTest: {i}");
 
-//        private void Init(int i)
-//        {
-//            _student = new Lab9.Blue.Task4(_input[i]);
-//        }
-//    }
-//}
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input mismatch\nTest: {i}");
+            }
+        }
+
+        private void Init(int i)
+        {
+            _student = new Lab9.Blue.Task4(_input[i]);
+        }
+    }
+}
