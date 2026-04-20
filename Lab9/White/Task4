@@ -4,17 +4,9 @@ namespace Lab9.White
     {
         private int _output;
 
-        public Task4(string text) : base(text)
-        {
-        }
+        public Task4(string text) : base(text) { }
 
-        public int Output
-        {
-            get
-            {
-                return _output;
-            }
-        }
+        public int Output => _output;
 
         public override void Review()
         {
@@ -24,7 +16,6 @@ namespace Lab9.White
         private int CalculateSumOfDigits(string text)
         {
             int sum = 0;
-
             foreach (char ch in text)
             {
                 if (char.IsDigit(ch))
@@ -32,7 +23,6 @@ namespace Lab9.White
                     sum += ch - '0';
                 }
             }
-
             return sum;
         }
 
