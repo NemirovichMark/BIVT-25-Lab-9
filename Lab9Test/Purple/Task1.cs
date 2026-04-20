@@ -1,8 +1,8 @@
-﻿//using System.Text.Json;
-//using System.Linq;
+﻿// using System.Text.Json;
+// using System.Linq;
 
-//namespace Lab9Test.Purple
-//{
+// namespace Lab9Test.Purple
+// {
 //    [TestClass]
 //    public sealed class Task1
 //    {
@@ -174,4 +174,4 @@
 //            _student = new Lab9.Purple.Task1(_input[i]);
 //        }
 //    }
-//}
+// }

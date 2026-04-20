@@ -1,3 +1,3 @@
-﻿namespace Lab9.Blue
-{
-}
+﻿// namespace Lab9.Blue
+// {
+// }

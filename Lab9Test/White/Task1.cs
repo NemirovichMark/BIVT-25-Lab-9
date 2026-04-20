@@ -1,7 +1,7 @@
-﻿//using System.Text.Json;
+﻿// using System.Text.Json;
 
-//namespace Lab9Test.White
-//{
+// namespace Lab9Test.White
+// {
 //    [TestClass]
 //    public sealed class Task1
 //    {
@@ -175,4 +175,4 @@
 //            _student = new Lab9.White.Task1(_input[i]);
 //        }
 //    }
-//}
+// }
