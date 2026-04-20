@@ -1,152 +1,151 @@
-namespace Lab9.White;
 
-public class Task2 : White
+namespace Lab9.White
 {
-    private int[,] _output;
-
-    public Task2(string text) : base(text) { }
-
-    public override void Review()
+    public class Task2 : White
     {
-        _output = syllablesMatrix(Input);
-    }
+        private int[,] _output;
 
-    public int[,] Output => _output ?? new int[0, 2];
+        public Task2(string text) : base(text) { }
 
-    public static int[,] syllablesMatrix(string text)
-    {
-        var currentWord = new System.Text.StringBuilder();
-        bool wordStartedAfterDigit = false;
-        bool lastWasDigit = false;
-
-        int wordCount = 0;
-        foreach (char c in text)
+        public override void Review()
         {
-            if (char.IsLetter(c) || c == '-' || c == '\'')
+            _output = syllablesMatrix(Input);
+        }
+
+        public int[,] Output => _output ?? new int[0, 2];
+
+        public static int[,] syllablesMatrix(string text)
+        {
+            var currentWord = new System.Text.StringBuilder();
+            bool wordStartedAfterDigit = false;
+            bool lastWasDigit = false;
+            int wordCount = 0;
+
+            foreach (char c in text)
             {
-                if (currentWord.Length == 0)
-                    wordStartedAfterDigit = lastWasDigit;
-                currentWord.Append(c);
-                lastWasDigit = false;
-            }
-            else
-            {
-                if (currentWord.Length > 0)
+                if (char.IsLetter(c) || c == '-' || c == '\'')
                 {
-                    if (!wordStartedAfterDigit)
-                        wordCount++;
-                    currentWord.Clear();
+                    if (currentWord.Length == 0)
+                        wordStartedAfterDigit = lastWasDigit;
+                    currentWord.Append(c);
+                    lastWasDigit = false;
                 }
-                lastWasDigit = char.IsDigit(c);
-            }
-        }
-        if (currentWord.Length > 0 && !wordStartedAfterDigit)
-            wordCount++;
-
-        string[] words = new string[wordCount];
-        currentWord.Clear();
-        wordStartedAfterDigit = false;
-        lastWasDigit = false;
-        int wi = 0;
-
-        foreach (char c in text)
-        {
-            if (char.IsLetter(c) || c == '-' || c == '\'')
-            {
-                if (currentWord.Length == 0)
-                    wordStartedAfterDigit = lastWasDigit;
-                currentWord.Append(c);
-                lastWasDigit = false;
-            }
-            else
-            {
-                if (currentWord.Length > 0)
+                else
                 {
-                    if (!wordStartedAfterDigit)
-                        words[wi++] = currentWord.ToString();
-                    currentWord.Clear();
+                    if (currentWord.Length > 0)
+                    {
+                        if (!wordStartedAfterDigit)
+                            wordCount++;
+                        currentWord.Clear();
+                    }
+                    lastWasDigit = char.IsDigit(c);
                 }
-                lastWasDigit = char.IsDigit(c);
             }
-        }
-        if (currentWord.Length > 0 && !wordStartedAfterDigit)
-            words[wi] = currentWord.ToString();
+            if (currentWord.Length > 0 && !wordStartedAfterDigit)
+                wordCount++;
 
-        char[] vowels = { 'а','е','ё','и','о','у','ы','э','ю','я',
-            'А','Е','Ё','И','О','У','Ы','Э','Ю','Я',
-            'a','e','i','o','u','y','A','E','I','O','U','Y' };
+            string[] words = new string[wordCount];
+            currentWord.Clear();
+            wordStartedAfterDigit = false;
+            lastWasDigit = false;
+            int wi = 0;
 
-        int[] syllablesPerWord = new int[words.Length];
-        int maxSyllables = 0;
-
-        for (int i = 0; i < words.Length; i++)
-        {
-            int syllables = 0;
-
-            foreach (char c in words[i])
+            foreach (char c in text)
             {
-                if (Array.IndexOf(vowels, c) >= 0)
-                    syllables++;
+                if (char.IsLetter(c) || c == '-' || c == '\'')
+                {
+                    if (currentWord.Length == 0)
+                        wordStartedAfterDigit = lastWasDigit;
+                    currentWord.Append(c);
+                    lastWasDigit = false;
+                }
+                else
+                {
+                    if (currentWord.Length > 0)
+                    {
+                        if (!wordStartedAfterDigit)
+                            words[wi++] = currentWord.ToString();
+                        currentWord.Clear();
+                    }
+                    lastWasDigit = char.IsDigit(c);
+                }
             }
+            if (currentWord.Length > 0 && !wordStartedAfterDigit)
+                words[wi] = currentWord.ToString();
 
-            if (syllables == 0)
-                syllables = 1;
+            char[] vowels = { 'а','е','ё','и','о','у','ы','э','ю','я',
+                'А','Е','Ё','И','О','У','Ы','Э','Ю','Я',
+                'a','e','i','o','u','y','A','E','I','O','U','Y' };
 
-            syllablesPerWord[i] = syllables;
+            int[] syllablesPerWord = new int[words.Length];
+            int maxSyllables = 0;
 
-            if (syllables > maxSyllables)
-                maxSyllables = syllables;
-        }
-
-        int[,] matrix = new int[maxSyllables, 2];
-
-        for (int i = 0; i < words.Length; i++)
-        {
-            int s = syllablesPerWord[i];
-            if (s > 0)
+            for (int i = 0; i < words.Length; i++)
             {
-                matrix[s - 1, 0] = s;
-                matrix[s - 1, 1]++;
+                int syllables = 0;
+                foreach (char c in words[i])
+                {
+                    if (Array.IndexOf(vowels, c) >= 0)
+                        syllables++;
+                }
+                if (syllables == 0)
+                    syllables = 1;
+                syllablesPerWord[i] = syllables;
+                if (syllables > maxSyllables)
+                    maxSyllables = syllables;
             }
-        }
 
-        int filledCount = 0;
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
-            if (matrix[i, 1] > 0)
-                filledCount++;
-        }
+            int[,] matrix = new int[maxSyllables, 2];
 
-        int[,] result = new int[filledCount, 2];
-        int resultIndex = 0;
-        for (int i = 0; i < matrix.GetLength(0); i++)
-        {
-            if (matrix[i, 1] > 0)
+            for (int i = 0; i < words.Length; i++)
             {
-                result[resultIndex, 0] = matrix[i, 0];
-                result[resultIndex, 1] = matrix[i, 1];
-                resultIndex++;
+                int s = syllablesPerWord[i];
+                if (s > 0)
+                {
+                    matrix[s - 1, 0] = s;
+                    matrix[s - 1, 1]++;
+                }
             }
+
+            int filledCount = 0;
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                if (matrix[i, 1] > 0)
+                    filledCount++;
+            }
+
+            int[,] result = new int[filledCount, 2];
+            int resultIndex = 0;
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                if (matrix[i, 1] > 0)
+                {
+                    result[resultIndex, 0] = matrix[i, 0];
+                    result[resultIndex, 1] = matrix[i, 1];
+                    resultIndex++;
+                }
+            }
+
+            return result;
         }
 
-        return result;
-    }
-
-    public override string ToString()
-    {
-        var matrix = Output;
-        if (matrix == null) return string.Empty;
-
-        var result = new System.Text.StringBuilder();
-
-        for (int i = 0; i < matrix.GetLength(0); i++)
+        public override string ToString()
         {
-            result.Append(matrix[i, 0]);
-            result.Append(':');
-            result.Append(matrix[i, 1]);
-            result.AppendLine();
-        }
+            var matrix = Output;
+            if (matrix == null) return string.Empty;
 
-        return result.ToString().TrimEnd();
+            var result = new System.Text.StringBuilder();
+
+            for (int i = 0; i < matrix.GetLength(0); i++)
+            {
+                result.Append(matrix[i, 0]);
+                result.Append(':');
+                result.Append(matrix[i, 1]);
+                result.AppendLine();
+            }
+
+            return result.ToString().TrimEnd();
+        }
     }
 }
+```
