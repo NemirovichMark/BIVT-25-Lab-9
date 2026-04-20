@@ -1,20 +1,30 @@
-namespace Lab9.White{
-
-public abstract class White
+namespace Lab9.White
 {
-    public string Input { get; private set; }
-
-    protected White(string input)
+    public abstract class White
     {
-        Input = input;
-    }
+        private string _input;
 
-    public abstract void Review();
+        public string Input => _input;
 
-    public virtual void ChangeText(string text)
-    {
-        Input = text;
-        Review();
+        protected White(string input)
+        {
+            _input = input;
+        }
+
+        protected string Text
+        {
+            get => _input;
+            set => _input = value;
+        }
+
+        public abstract void Review();
+
+        public virtual void ChangeText(string text)
+        {
+            _input = text;
+            Review();
+        }
+
+        public abstract override string ToString();
     }
-}
 }
