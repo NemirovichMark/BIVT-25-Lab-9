@@ -26,11 +26,11 @@ namespace Lab9.White
             }
         }
 
-        public Task1(string text) : base(text) // пустой конструктор
+        public Task1(string text) : base(text) 
         {
         }
 
-        private double CalculateAverageComplexity() // находим среднее(символы / количество предложений)
+        private double CalculateAverageComplexity() 
         {
             string[] sentences = SplitBySentenceEnders(Input);
 
@@ -59,24 +59,24 @@ namespace Lab9.White
         private string[] SplitBySentenceEnders(string text)
         {
             int count = 0;
-            var current = new StringBuilder(); // смотрим предложение
+            var current = new StringBuilder(); 
 
             for (int i = 0; i < text.Length; i++)
             {
-                current.Append(text[i]); // добавляем символ
-                if (Array.IndexOf(_sentenceEnders, text[i]) >= 0) // проверка на конец предл если конец + дальше идёт пробел перенос тд
+                current.Append(text[i]); 
+                if (Array.IndexOf(_sentenceEnders, text[i]) >= 0) 
                 {
                     bool isLast = i == text.Length - 1;
                     bool nextIsSpace = !isLast && char.IsWhiteSpace(text[i + 1]);
                     if (isLast || nextIsSpace)
                     {
                         count++;
-                        current.Clear(); // очистка для сл предл
+                        current.Clear(); 
                     }
                 }
             }
             if (current.Length > 0)
-                count++; // счетчик предложений
+                count++; 
 
             string[] sentences = new string[count];
             current.Clear();
