@@ -1,19 +1,15 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab9.White
 {
-    public class Task1 : White 
+    public class Task1 : White
     {
-        private readonly char[] _punctuationMarks =
+        private readonly char[] znaki =
         {
             '.', '!', '?', ',', ':', '"', ';', '–', '\'', '(', ')', '[', ']', '{', '}', '/'
         };
-
-        private readonly char[] _sentenceEnders = { '.', '!', '?' };
+        private readonly char[] st = { '.', '!', '?' };
 
         public double Output
         {
@@ -21,94 +17,96 @@ namespace Lab9.White
             {
                 if (string.IsNullOrEmpty(Input))
                     return 0;
-
                 return CalculateAverageComplexity();
             }
         }
 
-        public Task1(string text) : base(text) 
+        public Task1(string text) : base(text)
         {
         }
-
-        private double CalculateAverageComplexity() 
+        private double CalculateAverageComplexity()
         {
-            string[] sentences = SplitBySentenceEnders(Input);
+            
+            string[] ww = SplitBySentenceEnders(Input);
 
-            if (sentences.Length == 0)
+            if (ww.Length == 0)
                 return 0;
 
-            double totalComplexity = 0;
-            int realSentenceCount = 0;
+            double q = 0; 
+            int s = 0;    
 
-            foreach (var sentence in sentences)
+            foreach (var x in ww)
             {
-                var trimmed = sentence.Trim();
-                if (string.IsNullOrWhiteSpace(trimmed))
+                var trim = x.Trim();
+                if (string.IsNullOrWhiteSpace(trim))
                     continue;
 
-                int wordCount = CountWords(trimmed);
-                int punctuationCount = CountPunctuation(trimmed);
+                int wws = CountWords(trim); 
+                int punctuationCount = CountPunctuation(trim); 
 
-                totalComplexity += wordCount + punctuationCount;
-                realSentenceCount++;
+                q += wws + punctuationCount;
+                s++;
             }
 
-            return realSentenceCount == 0 ? 0 : totalComplexity / realSentenceCount;
+            if (s == 0)
+                return 0;
+            else
+                return q / s;
         }
-
         private string[] SplitBySentenceEnders(string text)
         {
-            int count = 0;
-            var current = new StringBuilder(); 
+
+            int h = 0;
+            var a = new StringBuilder();
 
             for (int i = 0; i < text.Length; i++)
             {
-                current.Append(text[i]); 
-                if (Array.IndexOf(_sentenceEnders, text[i]) >= 0) 
+                a.Append(text[i]);
+                if (Array.IndexOf(st, text[i]) >= 0)
                 {
-                    bool isLast = i == text.Length - 1;
-                    bool nextIsSpace = !isLast && char.IsWhiteSpace(text[i + 1]);
-                    if (isLast || nextIsSpace)
+                    bool isL = i == text.Length - 1; 
+                    bool nprobel = !isL && char.IsWhiteSpace(text[i + 1]); 
+                    if (isL || nprobel)
                     {
-                        count++;
-                        current.Clear(); 
+                        h++;
+                        a.Clear();
                     }
                 }
             }
-            if (current.Length > 0)
-                count++; 
+            if (a.Length > 0) h++; 
 
-            string[] sentences = new string[count];
-            current.Clear();
+       
+            string[] ww = new string[h];
+            a.Clear();
             int idx = 0;
 
             for (int i = 0; i < text.Length; i++)
             {
-                current.Append(text[i]);
-                if (Array.IndexOf(_sentenceEnders, text[i]) >= 0)
+                a.Append(text[i]);
+                if (Array.IndexOf(st, text[i]) >= 0)
                 {
-                    bool isLast = i == text.Length - 1;
-                    bool nextIsSpace = !isLast && char.IsWhiteSpace(text[i + 1]);
-                    if (isLast || nextIsSpace)
+                    bool isL = i == text.Length - 1;
+                    bool nprobel = !isL && char.IsWhiteSpace(text[i + 1]);
+                    if (isL || nprobel)
                     {
-                        sentences[idx++] = current.ToString();
-                        current.Clear();
+                        ww[idx++] = a.ToString();
+                        a.Clear();
                     }
                 }
             }
-            if (current.Length > 0)
-                sentences[idx] = current.ToString();
+            if (a.Length > 0)
+                ww[idx] = a.ToString();
 
-            return sentences;
+            return ww;
         }
-
         private int CountWords(string text)
         {
             var cleaned = new StringBuilder();
 
+
             foreach (var ch in text)
             {
-                if (Array.IndexOf(_punctuationMarks, ch) < 0)
+                if (Array.IndexOf(znaki, ch) < 0)
                     cleaned.Append(ch);
             }
 
@@ -122,15 +120,11 @@ namespace Lab9.White
 
         private int CountPunctuation(string text)
         {
-            int count = 0;
-
+            int h = 0;
             foreach (var ch in text)
-            {
-                if (Array.IndexOf(_punctuationMarks, ch) >= 0)
-                    count++;
-            }
-
-            return count;
+                if (Array.IndexOf(znaki, ch) >= 0)
+                    h++;
+            return h;
         }
 
         public override void Review()
