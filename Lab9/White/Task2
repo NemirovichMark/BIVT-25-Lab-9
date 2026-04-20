@@ -1,4 +1,5 @@
-namespace Lab9.White;
+namespace Lab9.White{
+
 public class Task2 : White
 {
     private int[,] _output;
@@ -139,4 +140,5 @@ public class Task2 : White
 
         return result.ToString().TrimEnd();
     }
+}
 }
