@@ -6,7 +6,6 @@ namespace Lab9.White
     public class Task3 : White
     {
         private string[,] _codes;
-
         private string _output;
 
         public Task3(string text, string[,] codes) : base(text)
@@ -18,7 +17,8 @@ namespace Lab9.White
         {
             get
             {
-                if (string.IsNullOrEmpty(_output)) return Input;
+                if (string.IsNullOrEmpty(_output))
+                    return Input;
                 return _output;
             }
         }
@@ -31,33 +31,36 @@ namespace Lab9.White
         private string ReplaceWordsWithCodes(string text)
         {
             var result = new StringBuilder();
-            var sWord = new StringBuilder();
+            var currentWord = new StringBuilder();
 
             for (int i = 0; i < text.Length; i++)
             {
                 char ch = text[i];
 
                 if (char.IsLetter(ch) || ch == '\'' || ch == '-')
-                    sWord.Append(ch);
+                {
+                    currentWord.Append(ch);
+                }
                 else
                 {
-                    if (sWord.Length > 0)
+                    if (currentWord.Length > 0)
                     {
-                        string word = sWord.ToString();
+                        string word = currentWord.ToString();
                         string code = FindCode(word);
                         result.Append(code);
-                        sWord.Clear();
+                        currentWord.Clear();
                     }
                     result.Append(ch);
                 }
             }
 
-            if (sWord.Length > 0)
+            if (currentWord.Length > 0)
             {
-                string word = sWord.ToString();
+                string word = currentWord.ToString();
                 string code = FindCode(word);
                 result.Append(code);
             }
+
             return result.ToString();
         }
 
@@ -66,7 +69,9 @@ namespace Lab9.White
             for (int i = 0; i < _codes.GetLength(0); i++)
             {
                 if (string.Equals(_codes[i, 0], word, StringComparison.Ordinal))
+                {
                     return _codes[i, 1];
+                }
             }
             return word;
         }
