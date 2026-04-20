@@ -1,160 +1,160 @@
-﻿
-//using System;
-//using System.Text.Json;
 
-//namespace Lab9Test.Green
-//{
-//    [TestClass]
-//    public sealed class Task3
-//    {
-//        private Lab9.Green.Task3 _student;
+using System;
+using System.Text.Json;
 
-//        private string[] _input;
-//        private string[] _pattern;
-//        private string[][] _output;
+namespace Lab9Test.Green
+{
+    [TestClass]
+    public sealed class Task3
+    {
+        private Lab9.Green.Task3 _student;
 
-//        [TestInitialize]
-//        public void LoadData()
-//        {
-//            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
-//            var file = Path.Combine(folder, "Lab9Test", "Green", "data.json");
+        private string[] _input;
+        private string[] _pattern;
+        private string[][] _output;
 
-//            var json = JsonSerializer.Deserialize<JsonElement>(
-//                File.ReadAllText(file));
+        [TestInitialize]
+        public void LoadData()
+        {
+            var folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.Parent.FullName;
+            var file = Path.Combine(folder, "Lab9Test", "Green", "data.json");
 
-//            _input = json.GetProperty("Task3").GetProperty("input").Deserialize<string[]>();
-//            _pattern = json.GetProperty("Task3").GetProperty("pattern").Deserialize<string[]>();
-//            _output = json.GetProperty("Task3").GetProperty("output").Deserialize<string[][]>();
-//        }
+            var json = JsonSerializer.Deserialize<JsonElement>(
+                File.ReadAllText(file));
 
-//        [TestMethod]
-//        public void Test_00_OOP()
-//        {
-//            var type = typeof(Lab9.Green.Task3);
+            _input = json.GetProperty("Task3").GetProperty("input").Deserialize<string[]>();
+            _pattern = json.GetProperty("Task3").GetProperty("pattern").Deserialize<string[]>();
+            _output = json.GetProperty("Task3").GetProperty("output").Deserialize<string[][]>();
+        }
 
-//            Assert.IsTrue(type.IsClass, "Task3 must be a class");
-//            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Green.Green)),
-//                "Task3 must inherit from Green");
+        [TestMethod]
+        public void Test_00_OOP()
+        {
+            var type = typeof(Lab9.Green.Task3);
 
-//            Assert.IsNotNull(type.GetConstructor(new[] { typeof(string), typeof(string) }),
-//                "Task3 must have constructor Task3(string input)");
+            Assert.IsTrue(type.IsClass, "Task3 must be a class");
+            Assert.IsTrue(type.IsSubclassOf(typeof(Lab9.Green.Green)),
+                "Task3 must inherit from Green");
 
-//            Assert.IsNotNull(type.GetMethod("Review"), "Method Review() not found");
-//            Assert.IsNotNull(type.GetMethod("ToString"), "Method ToString() not found");
-//        }
+            Assert.IsNotNull(type.GetConstructor(new[] { typeof(string), typeof(string) }),
+                "Task3 must have constructor Task3(string input)");
 
-//        [TestMethod]
-//        public void Test_01_Input()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input stored incorrectly\nTest: {i}");
-//            }
-//        }
+            Assert.IsNotNull(type.GetMethod("Review"), "Method Review() not found");
+            Assert.IsNotNull(type.GetMethod("ToString"), "Method ToString() not found");
+        }
 
-//        [TestMethod]
-//        public void Test_02_Output()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+        [TestMethod]
+        public void Test_01_Input()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input stored incorrectly\nTest: {i}");
+            }
+        }
 
-//                var expected = _output[i]; // string[]
-//                var actual = _student.Output; // предполагаем, что Output возвращает строку слов через пробел
+        [TestMethod]
+        public void Test_02_Output()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expected.Length, actual.Length, $"Length mismatch\nTest: {i}");
-//                for (int j = 0; j < expected.Length; j++)
-//                {
-//                    Assert.AreEqual(expected[j], actual[j],
-//                        $"Word mismatch\nTest: {i}, Index: {j}\nExpected: {expected[j]}\nActual: {actual[j]}");
-//                }
-//            }
-//        }
+                var expected = _output[i]; // string[]
+                var actual = _student.Output; // предполагаем, что Output возвращает строку слов через пробел
 
-//        [TestMethod]
-//        public void Test_03_ToString()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                Assert.AreEqual(expected.Length, actual.Length, $"Length mismatch\nTest: {i}");
+                for (int j = 0; j < expected.Length; j++)
+                {
+                    Assert.AreEqual(expected[j], actual[j],
+                        $"Word mismatch\nTest: {i}, Index: {j}\nExpected: {expected[j]}\nActual: {actual[j]}");
+                }
+            }
+        }
 
-//                var expected = string.Join(Environment.NewLine, _output[i]);
-//                var actual = _student.ToString();
+        [TestMethod]
+        public void Test_03_ToString()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expected, actual,
-//                    $"ToString output mismatch\nTest: {i}\nExpected:\n{expected}\nActual:\n{actual}");
-//            }
-//        }
+                var expected = string.Join(Environment.NewLine, _output[i]);
+                var actual = _student.ToString();
 
-//        [TestMethod]
-//        public void Test_04_ChangeText()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
-//                var originalOutput = _student.Output;
+                Assert.AreEqual(expected, actual,
+                    $"ToString output mismatch\nTest: {i}\nExpected:\n{expected}\nActual:\n{actual}");
+            }
+        }
 
-//                var newText = _input[(i + 1) % _input.Length];
-//                _student.ChangeText(newText);
+        [TestMethod]
+        public void Test_04_ChangeText()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
+                var originalOutput = _student.Output;
 
-//                Assert.AreEqual(newText, _student.Input,
-//                    $"ChangeText failed to update Input\nTest: {i}");
+                var newText = _input[(i + 1) % _input.Length];
+                _student.ChangeText(newText);
 
-//                for (int j = 0; j < Math.Min(originalOutput.Length, _student.Output.Length); j++)
-//                {
-//                    Assert.AreNotEqual(originalOutput[j], _student.Output[j],
-//                        $"ChangeText did not update Output\nTest: {i}");
-//                }
-//            }
-//        }
-//        [TestMethod]
-//        public void Test_05_TypeSafety()
-//        {
-//            Init(0);
-//            _student.Review();
-//            Assert.IsInstanceOfType(_student.Output, typeof(string[]),
-//                $"Output must be of type string\nActual type: {_student.Output.GetType()}");
-//        }
+                Assert.AreEqual(newText, _student.Input,
+                    $"ChangeText failed to update Input\nTest: {i}");
 
-//        [TestMethod]
-//        public void Test_06_ToStringLength()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
-//                _student.Review();
+                for (int j = 0; j < Math.Min(originalOutput.Length, _student.Output.Length); j++)
+                {
+                    Assert.AreNotEqual(originalOutput[j], _student.Output[j],
+                        $"ChangeText did not update Output\nTest: {i}");
+                }
+            }
+        }
+        [TestMethod]
+        public void Test_05_TypeSafety()
+        {
+            Init(0);
+            _student.Review();
+            Assert.IsInstanceOfType(_student.Output, typeof(string[]),
+                $"Output must be of type string\nActual type: {_student.Output.GetType()}");
+        }
 
-//                var expectedLength = string.Join(Environment.NewLine, _output[i]).Length;
-//                var actualLength = _student.ToString().Length;
+        [TestMethod]
+        public void Test_06_ToStringLength()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
+                _student.Review();
 
-//                Assert.AreEqual(expectedLength, actualLength,
-//                    $"Wrong ToString length\nTest: {i}\nExpected length: {expectedLength}\nActual length: {actualLength}");
-//            }
-//        }
+                var expectedLength = string.Join(Environment.NewLine, _output[i]).Length;
+                var actualLength = _student.ToString().Length;
 
-//        [TestMethod]
-//        public void Test_07_Inheritance()
-//        {
-//            for (int i = 0; i < _input.Length; i++)
-//            {
-//                Init(i);
+                Assert.AreEqual(expectedLength, actualLength,
+                    $"Wrong ToString length\nTest: {i}\nExpected length: {expectedLength}\nActual length: {actualLength}");
+            }
+        }
 
-//                Assert.IsTrue(_student is Lab9.Green.Green,
-//                    $"Task3 must inherit from Green\nTest: {i}");
+        [TestMethod]
+        public void Test_07_Inheritance()
+        {
+            for (int i = 0; i < _input.Length; i++)
+            {
+                Init(i);
 
-//                Assert.AreEqual(_input[i], _student.Input,
-//                    $"Input mismatch after inheritance\nTest: {i}");
-//            }
-//        }
+                Assert.IsTrue(_student is Lab9.Green.Green,
+                    $"Task3 must inherit from Green\nTest: {i}");
 
-//        private void Init(int i)
-//        {
-//            _student = new Lab9.Green.Task3(_input[i], _pattern[i]);
-//        }
-//    }
-//}
+                Assert.AreEqual(_input[i], _student.Input,
+                    $"Input mismatch after inheritance\nTest: {i}");
+            }
+        }
+
+        private void Init(int i)
+        {
+            _student = new Lab9.Green.Task3(_input[i], _pattern[i]);
+        }
+    }
+}
