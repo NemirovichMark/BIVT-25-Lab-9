@@ -1,16 +1,13 @@
-using System;
 using System.Text;
 
 namespace Lab9.White
 {
     public class Task1 : White
     {
-        private readonly char[] _punctuationMarks =
-        {
-            '.', '!', '?', ',', ':', '"', ';', '–', '\'', '(', ')', '[', ']', '{', '}', '/'
-        };
-
+        private readonly char[] _punctuationMarks = { '.', '!', '?', ',', ':', '"', ';', '–', '\'', '(', ')', '[', ']', '{', '}', '/' };
         private readonly char[] _sentenceEnders = { '.', '!', '?' };
+
+        public Task1(string text) : base(text) { }
 
         public double Output
         {
@@ -18,19 +15,13 @@ namespace Lab9.White
             {
                 if (string.IsNullOrEmpty(Input))
                     return 0;
-
                 return CalculateAverageComplexity();
             }
-        }
-
-        public Task1(string text) : base(text)
-        {
         }
 
         private double CalculateAverageComplexity()
         {
             string[] sentences = SplitBySentenceEnders(Input);
-
             if (sentences.Length == 0)
                 return 0;
 
@@ -45,7 +36,6 @@ namespace Lab9.White
 
                 int wordCount = CountWords(trimmed);
                 int punctuationCount = CountPunctuation(trimmed);
-
                 totalComplexity += wordCount + punctuationCount;
                 realSentenceCount++;
             }
@@ -102,37 +92,28 @@ namespace Lab9.White
         private int CountWords(string text)
         {
             var cleaned = new StringBuilder();
-
             foreach (var ch in text)
             {
                 if (Array.IndexOf(_punctuationMarks, ch) < 0)
                     cleaned.Append(ch);
             }
 
-            var words = cleaned.ToString().Replace("-", " ").Split(
-                new[] { ' ', '\t', '\n', '\r' },
-                StringSplitOptions.RemoveEmptyEntries
-            );
-
+            var words = cleaned.ToString().Replace("-", " ").Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             return words.Length;
         }
 
         private int CountPunctuation(string text)
         {
             int count = 0;
-
             foreach (var ch in text)
             {
                 if (Array.IndexOf(_punctuationMarks, ch) >= 0)
                     count++;
             }
-
             return count;
         }
 
-        public override void Review()
-        {
-        }
+        public override void Review() { }
 
         public override string ToString()
         {
