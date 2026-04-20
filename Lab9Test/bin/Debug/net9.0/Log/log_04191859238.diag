@@ -1,0 +1,17 @@
+2026-04-19T18:43:59.2432406+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.4.3+c252b64ad913ea9411fc5d17bfd5580d2d061497
+2026-04-19T18:43:59.2548535+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-04-19T18:43:59.2561720+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-04-19T18:43:59.2561756+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 18:43:59.223
+2026-04-19T18:43:59.2577415+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 17844
+2026-04-19T18:43:59.2577802+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 9.0.11
+2026-04-19T18:43:59.2577932+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\9.0.11\System.Private.CoreLib.dll
+2026-04-19T18:43:59.2578039+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-04-19T18:43:59.2578070+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: F:\UNIK\Labs\BIVT-25-Lab-9\Lab9Test\bin\Debug\net9.0\Lab9Test.dll
+2026-04-19T18:43:59.2578969+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory F:\UNIK\Labs\BIVT-25-Lab-9\Lab9Test\bin\Debug\net9.0\Log --client-port 54575'
+2026-04-19T18:43:59.2593246+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-04-19T18:43:59.2881668+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-04-19T18:43:59.2923530+00:00 Microsoft.Testing.Platform.Configurations.JsonConfigurationSource+JsonConfigurationProvider INFORMATION Config file 'F:\UNIK\Labs\BIVT-25-Lab-9\Lab9Test\bin\Debug\net9.0\Lab9Test.testconfig.json' not found.
+2026-04-19T18:43:59.2939461+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable:  VSTest mode: False
+2026-04-19T18:43:59.4079856+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: 'MSTestExtension' Version: '3.6.4' DisplayName: 'MSTest' Description: 'MSTest Framework for Microsoft Testing Platform'
+2026-04-19T18:43:59.4173674+00:00 Microsoft.Testing.Extensions.VSTestBridge.ObjectModel.MessageLoggerAdapter WARNING Сборщики данных Runsettings не поддерживаются в Microsoft.Testing.Platform и будут пропущены
+2026-04-19T18:43:59.4895274+00:00 Microsoft.Testing.Extensions.VSTestBridge.ObjectModel.MessageLoggerAdapter INFORMATION Test Parallelization enabled for F:\UNIK\Labs\BIVT-25-Lab-9\Lab9Test\bin\Debug\net9.0\Lab9Test.dll (Workers: 1, Scope: MethodLevel)
