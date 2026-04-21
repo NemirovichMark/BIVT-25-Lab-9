@@ -1,13 +1,13 @@
 ﻿
-//using System;
-//using System.IO;
-//using System.Text.Json;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using System.Linq;
-//using System.Globalization;
+// using System;
+// using System.IO;
+// using System.Text.Json;
+// using Microsoft.VisualStudio.TestTools.UnitTesting;
+// using System.Linq;
+// using System.Globalization;
 
-//namespace Lab9Test.Blue
-//{
+// namespace Lab9Test.Blue
+// {
 //    [TestClass]
 //    public sealed class Task3
 //    {
@@ -162,4 +162,4 @@
 //            _student = new Lab9.Blue.Task3(_input[i]);
 //        }
 //    }
-//}
+// }

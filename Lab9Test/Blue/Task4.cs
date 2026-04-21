@@ -1,12 +1,12 @@
 ﻿
-//using System;
-//using System.IO;
-//using System.Text.Json;
-//using Microsoft.VisualStudio.TestTools.UnitTesting;
-//using System.Linq;
+// using System;
+// using System.IO;
+// using System.Text.Json;
+// using Microsoft.VisualStudio.TestTools.UnitTesting;
+// using System.Linq;
 
-//namespace Lab9Test.Blue
-//{
+// namespace Lab9Test.Blue
+// {
 //    [TestClass]
 //    public sealed class Task4
 //    {
@@ -146,4 +146,4 @@
 //            _student = new Lab9.Blue.Task4(_input[i]);
 //        }
 //    }
-//}
+// }
