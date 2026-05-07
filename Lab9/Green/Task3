@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Lab9.Green
+{
+    public class Task3 : Green
+    {
+        private string _subString;
+        private string[] _output;
+        public string[] Output => _output;
+
+        public Task3(string text, string subString) : base(text)
+        {
+            _subString = subString.ToLower();
+        }
+
+        public override void Review()
+        {
+            if (string.IsNullOrEmpty(Input)) return;
+            string[] words = Input.Split(new char[] {' ', ',', '.', '!', '?'}, StringSplitOptions.RemoveEmptyEntries);
+            List<string> result = new List<string>();
+            HashSet<string> seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (string word in words)
+            {
+                if (word.ToLower().Contains(_subString))
+                {
+                    if (!seen.Contains(word))
+                    {
+                        result.Add(word);
+                        seen.Add(word);
+                    }
+                }
+            }
+
+            _output = result.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return _output != null ? string.Join(Environment.NewLine, _output) : "";
+        }
+    }
+}
