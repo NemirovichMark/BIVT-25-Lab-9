@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Lab9.Green;
+
+public class Task1 : Green
+{
+    private (char, double)[] _output;
+    public (char, double)[] Output => _output;
+
+    public Task1(string text) : base(text) {}
+
+    public override void Review()
+    {
+        if (string.IsNullOrEmpty(Input)) return;
+        string text = Input.ToLower();
+        int totalLetters = 0;
+        Dictionary<char, int> counts = new Dictionary<char, int>();
+
+        foreach (char c in text)
+        {
+            if (c >= 'а' && c <= 'я') //проверяем руссакя буква или нет
+            {
+                if (counts.ContainsKey(c))
+                {
+                    counts[c]++;
+                }
+                else
+                {
+                    counts[c] = 1;
+                }
+                totalLetters++;
+            }
+        }
+        var result = new List<(char, double)>();
+        foreach (var kvp in counts)
+        {
+            result.Add((kvp.Key, (double)kvp.Value / totalLetters));
+        }
+
+        _output = result.OrderBy(x => x.Item1).ToArray();
+    }
+
+    public override string ToString()
+    {
+        if (_output == null) return "";
+        List<string> lines = new List<string>();
+        foreach (var item in _output)
+        {
+            lines.Add($"{item.Item1} {item.Item2:F4}");
+        }
+        return string.Join(Environment.NewLine, lines);
+    }
+}
