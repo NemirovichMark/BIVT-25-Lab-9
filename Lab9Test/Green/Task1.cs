@@ -1,9 +1,9 @@
 ﻿
-//using System.Globalization;
-//using System.Text.Json;
+// using System.Globalization;
+// using System.Text.Json;
 
-//namespace Lab9Test.Green
-//{
+// namespace Lab9Test.Green
+// {
 //    [TestClass]
 //    public sealed class Task1
 //    {
@@ -174,4 +174,4 @@
 //            _student = new Lab9.Green.Task1(_input[i]);
 //        }
 //    }
-//}
+// }
