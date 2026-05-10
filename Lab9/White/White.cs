@@ -1,4 +1,4 @@
-namespace Lab9.White
+namespace Lab9.White //lol
 {
     public abstract class White
     {
