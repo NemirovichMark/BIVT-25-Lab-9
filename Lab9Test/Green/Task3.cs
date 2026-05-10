@@ -1,9 +1,9 @@
 ﻿
-//using System;
-//using System.Text.Json;
+// using System;
+// using System.Text.Json;
 
-//namespace Lab9Test.Green
-//{
+// namespace Lab9Test.Green
+// {
 //    [TestClass]
 //    public sealed class Task3
 //    {
@@ -157,4 +157,4 @@
 //            _student = new Lab9.Green.Task3(_input[i], _pattern[i]);
 //        }
 //    }
-//}
+// }
