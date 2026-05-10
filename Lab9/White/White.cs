@@ -107,9 +107,9 @@ namespace Lab9.White
         private string _output;
         public string Output => _output;
 
-        public Task3(string text) : base(text)
+         public Task3(string text, string[,] new_codes) : base(text)
         {
-            _codes = _codes;
+            _codes = new_codes;
         }
 
         public override void Review()
